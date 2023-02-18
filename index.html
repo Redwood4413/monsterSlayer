@@ -13,7 +13,7 @@
 
 <body>
   <header>
-    <h1>Monster Slayer</h1>
+    <h1>Monster Slayer</h1> <small>by Redwood</small>
   </header>
   <div id="game">
     <div class="entity-desc">
@@ -42,11 +42,19 @@
         <div :class="{ 'healthbar__value': true, 'red': player.health <= 30 }" :style="playerHealthBar"></div>
       </div>
     </section>
-    <section id="controls">
+    <section class="container" v-if="gameState.isEnded">
+      <h2>Fight is ended!</h2>
+      <h3 v-if="player.isDead">You are dead. Run fast to get your items back!</h3>
+      <h3 v-else-if="monster.isDead">You won!</h3>
+      <button v-if="player.isDead && !monster.isDead" @click="restartTheGame">Restart</button>
+      <button v-else-if="monster.isDead && !player.isDead" @click="findNewMonster">Find New Monster</button>
+      <h3 v-else>You've retreated, fight back in: {{ gameState.counter }}</h3>
+    </section>
+    <section id="controls" v-else>
       <button @click="playerAttack(0)" :disabled="!gameState.playerTurn">ATTACK</button>
       <button @click="launchSpecialAttack" :disabled="!playerSpecAttackReady">SPECIAL ATTACK</button>
-      <button>HEAL</button>
-      <button>SURRENDER</button>
+      <button :disabled="!player.isAbleToHeal" @click="healPlayer">HEAL</button>
+      <button :disabled="!player.isAbleToRetreat" @click="retreat">RETREAT</button>
     </section>
     <section id="log" class="container">
       <h2>Battle Log</h2>
