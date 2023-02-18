@@ -157,13 +157,14 @@ const app = Vue.createApp({
       this.player.health += 30;
 
       this.battlelog(`You've retreated, monster heals for ${value}HP, and You for 30HP.`)
-      setInterval(() => {
+      const interval = setInterval(() => {
         this.gameState.counter--
 
         if (this.gameState.counter === 0) {
           this.gameState.isEnded = false;
           this.gameState.counter = 3;
           this.gameState.round = 1;
+          clearInterval(interval)
           return;
         }
       }, 1000);

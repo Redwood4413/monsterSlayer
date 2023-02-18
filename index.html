@@ -26,6 +26,9 @@
       <span>Lvl: {{ monster.level }}</span>
       <span>Crit: {{player.critChance + monster.level * 2}}%</span>
     </div>
+    <section class="container">
+      <span>Round: {{ gameState.round }}</span>
+    </section>
     <section id="monster" class="container">
       <h2>Monster Health: <span>{{ monster.health }}</span></h2>
       <div class="healthbar">
