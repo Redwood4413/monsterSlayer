@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vue Basics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://unpkg.com/vue@next" defer></script>
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>Monster Slayer</h1>
+  </header>
+  <div id="game">
+    <div class="entity-desc">
+      <span>You</span>
+      <span>Lvl: {{player.level}}</span>
+      <span>Crit: {{player.critChance + player.level * 2}}%</span>
+    </div>
+    <div class="entity-desc right">
+      <span>Monster</span>
+      <span>Lvl: {{ monster.level }}</span>
+      <span>Crit: {{player.critChance + monster.level * 2}}%</span>
+    </div>
+    <section class="container">
+      <span>Round: {{ gameState.round }}</span>
+    </section>
+    <section id="monster" class="container">
+      <h2>Monster Health: <span>{{ monster.health }}</span></h2>
+      <div class="healthbar">
+        <div :class="{ 'healthbar__value': true, 'red': monster.health <= 30 }" :style="monsterHealthBar">
+        </div>
+      </div>
+    </section>
+    <section id="player" class="container">
+      <h2>Your Health: <span>{{ player.health }}</span></h2>
+      <div class="healthbar">
+        <div :class="{ 'healthbar__value': true, 'red': player.health <= 30 }" :style="playerHealthBar"></div>
+      </div>
+    </section>
+    <section id="controls">
+      <button @click="playerAttack(0)" :disabled="!gameState.playerTurn">ATTACK</button>
+      <button @click="launchSpecialAttack" :disabled="!playerSpecAttackReady">SPECIAL ATTACK</button>
+      <button>HEAL</button>
+      <button>SURRENDER</button>
+    </section>
+    <section id="log" class="container">
+      <h2>Battle Log</h2>
+      <ul>
+        <li v-for="log in battleLog">
+          <p>{{ log }}</p>
+        </li>
+      </ul>
+    </section>
+  </div>
+</body>
+
+</html>
